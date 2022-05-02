@@ -1,7 +1,7 @@
 <h1>Listing Images</h1>
 
 <%= for image <- @images do %>
-  <img src={Imageer.ImageUploader.url({image.image, image})}><br>
+  <img src={ImageUploader.url({image.image, image})}><br>
 <% end %>
 
 <span><%= link "New Image", to: Routes.image_path(@conn, :new) %></span>

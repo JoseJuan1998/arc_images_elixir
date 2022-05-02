@@ -1,11 +1,10 @@
 defmodule Imageer.Images.Image do
   use Ecto.Schema
-  import Arc.Ecto.Schema
-
+  use  Waffle.Ecto.Schema
   import Ecto.Changeset
 
   schema "images" do
-    field :image, Imageer.ImageUploader.Type
+    field :image, ImageUploader.Type
 
     timestamps()
   end

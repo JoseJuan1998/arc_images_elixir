@@ -1,13 +1,11 @@
-defmodule Imageer.ImageUploader do
-  use Arc.Definition
-  use Arc.Ecto.Definition
+defmodule ImageUploader do
+  use Waffle.Definition
+  use Waffle.Ecto.Definition
 
-  def __storage, do: Arc.Storage.Local
+  # Include ecto support (requires package waffle_ecto installed):
+  # use Waffle.Ecto.Definition
 
-  # Include ecto support (requires package arc_ecto installed):
-  # use Arc.Ecto.Definition
-
-  @versions [:original]
+  @versions [:original, :thumb]
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]
@@ -17,10 +15,19 @@ defmodule Imageer.ImageUploader do
   #   :custom_bucket_name
   # end
 
-  # Whitelist file extensions:
-  # def validate({file, _}) do
-  #   ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
+  # def bucket({_file, scope}) do
+  #   scope.bucket || bucket()
   # end
+
+  # Whitelist file extensions:
+  def validate({file, _}) do
+    file_extension = file.file_name |> Path.extname() |> String.downcase()
+
+    case Enum.member?(~w(.jpg .jpeg .gif .png), file_extension) do
+      true -> :ok
+      false -> {:error, "invalid file type"}
+    end
+  end
 
   # Define a thumbnail transformation:
   # def transform(:thumb, _) do
@@ -28,14 +35,15 @@ defmodule Imageer.ImageUploader do
   # end
 
   # Override the persisted filenames:
-  # def filename(version, _) do
+  # def filename(version, other) do
+  #   IO.inspect(other)
   #   version
   # end
 
   # Override the storage directory:
-  # def storage_dir(version, {file, scope}) do
-  #   "/images/"
-  # end
+  def storage_dir(_version, {_file, _scope}) do
+    "images/business_units/logos"
+  end
 
   # Provide a default URL if there hasn't been a file uploaded
   # def default_url(version, scope) do

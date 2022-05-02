@@ -20,7 +20,7 @@ defmodule Imageer.MixProject do
   def application do
     [
       mod: {Imageer.Application, []},
-      extra_applications: [:logger, :runtime_tools, :arc_ecto]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -49,8 +49,8 @@ defmodule Imageer.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:arc, "~> 0.11.0"},
-      {:arc_ecto, "~> 0.11.3"}
+      {:waffle, "~> 1.1"},
+      {:waffle_ecto, "~> 0.0.11"}
     ]
   end
 

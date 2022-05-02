@@ -16,7 +16,6 @@ defmodule ImageerWeb.ImageController do
   end
 
   def create(conn, %{"image" => image_params}) do
-    IO.inspect(image_params)
     changeset = Image.changeset(%Image{}, image_params)
 
     case Repo.insert(changeset) do
